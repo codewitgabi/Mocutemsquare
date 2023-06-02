@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.text import slugify
+from django.urls import reverse
 import cloudinary.uploader
 from ckeditor.fields import RichTextField
 
@@ -41,7 +42,10 @@ class Post(models.Model):
 			"is_superuser": True
 		}
 	)
+	published = models.BooleanField(default=False)
+	notified = models.BooleanField(default=False, editable=False)
 	date_created = models.DateTimeField(auto_now_add=True)
+	
 	
 	class Meta:
 		db_table = "blog_post"
@@ -60,7 +64,21 @@ class Post(models.Model):
 		print(response["secure_url"])
 		# resave
 		super().save(*args, **kwargs)
+
+	def get_absolute_url(self):
+		return reverse("content:post_detail", kwargs={"post_slug": self.slug})
 	
 	def __str__(self):
 		return self.title
+
+
+class Subscriber(models.Model):
+	"""
+	Newsletter subscriber model
+	"""
+	id = models.UUIDField(primary_key=True, editable=False, default=uuid.uuid4)
+	email = models.EmailField(unique=True)
+	
+	def __str__(self):
+		return self.email
 
