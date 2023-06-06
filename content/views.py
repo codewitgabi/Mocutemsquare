@@ -9,6 +9,19 @@ def post_detail(request, post_slug):
 	return HttpResponse("Hello world")
 
 
+def subscribe_to_newsletter(request):
+	"""
+	Subscriber newsletter subscription handler
+	"""
+	if request.method == "POST":
+		email = request.POST.get("email")
+		
+		subscriber = Subscriber.objects.get_or_create(email=email)[0]
+		subscriber.save()
+		
+	return redirect(request.META.HTTP_REFERER)
+
+
 def unsubscribe_to_newsletter(request):
 	"""
 	Subscriber newsletter unsubscription page view
