@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Newsletter Unsubscription</title>
+  <style>
+    *{
+      box-sizing: border-box;
+    }
+    body {
+      font-family: Helvetica;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      color: #333;
+      text-align: center;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      background-color: #f5f5f5;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    p {
+      margin-top: 20px;
+    }
+    .button {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #333;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+    }
+    .button:hover {
+      background-color: #555;
+    }
+    input {
+        width: 100%;
+        padding: 12px;
+        display: inline-block;
+        margin-bottom: 1em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Unsubscribe Confirmation</h1>
+    <p>
+      Are you sure you want to unsubscribe from our newsletter? If yes, kindly enter your email for final verification
+    </p>
+    <form method="post">
+    {% csrf_token %}
+        <input type="email" name="email" placeholder="Enter your email..." required/>
+        <button type="submit" class="button">Unsubscribe</button>
+    </form>
+  </div>
+</body>
+</html>

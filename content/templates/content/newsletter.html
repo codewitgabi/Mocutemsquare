@@ -28,15 +28,21 @@
         .content p {
             font-family: Helvetica;
             font-weight: 300;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
         }
-        .heavy {
-            font-weight: 900;
-            font-size: 1.25rem;
-            letter-spacing: 1.5px;
+        .small-text {
+            font-size: 0.8rem;
         }
-        img {
-            width: 100%;
+        #unsubscribe-btn {
+            background-color: #f44336;
+            color: #fff;
+            padding: 10px 20px;
+            text-decoration: none;
+            text-transform: uppercase;
+            border-radius: 8px;
+            display: inline-block;
+            margin-top: 2em;
+            font-size: 1.1rem;
         }
     </style>
 </head>
@@ -44,7 +50,17 @@
     <div class="container">
         <div class="bg-red"></div>
         <div class="content">
-            <a href="{{ post_link }}">Link to Post</a>
+            <p>Dear Subscriber,</p>
+            <p>We are excited to inform you about our latest blog post:</p>
+            <h1>
+                <a href="{{ post_url }}">{{ post.title }}</a>
+            </h1>
+            <p>{{ post.body|safe|truncatewords:"35" }}</p>
+            
+            <p class="small-text">If you no longer wish to receive these updates, you can unsubscribe by clicking the button below:</p>
+            <a id="unsubscribe-btn" href="{{ unsubscribe_url }}">
+            Unsubscribe
+        </a>
         </div>
     </div>
 </body>
