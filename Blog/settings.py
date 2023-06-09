@@ -1,8 +1,6 @@
 from pathlib import Path
 import os
 from decouple import config
-import cloudinary
-import cloudinary.uploader
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -28,6 +26,7 @@ INSTALLED_APPS = [
     # custom apps
     "ckeditor",
     "ckeditor_uploader",
+    "cloudvault",
     "content.apps.ContentConfig",
     "account.apps.AccountConfig",
 ]
@@ -106,13 +105,11 @@ USE_I18N = True
 USE_TZ = True
 
 TIME_INPUT_FORMATS = ('%I:%M %p',)
-DATE_INPUT_FORMATS = ("%Y-%m-%d")
+DATE_INPUT_FORMATS = ("%Y-%m-%d",)
 
 
 STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-MEDIA_URL = "/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -126,7 +123,6 @@ JAZZMIN_SETTINGS = {
 	"welcome_sign": "Welcome to Blog Admin",
 	"user_avatar": "avatar",
 	"copyright": "My blog by codewitgbabi",
-	"user_avatar": None,
 	"show_sidebar": True,
 	"navigation_expanded": True,
 }
@@ -140,13 +136,15 @@ EMAIL_USE_SSL = True
 DEFAULT_FROM_EMAIL = "Blog<no_reply@domain.com>"
 
 # cloudinary config
-cloudinary.config(
-	cloud_name = config("CLOUDINARY_NAME"),
-	api_key = config("CLOUDINARY_API_KEY"),
-	api_secret = config("CLOUDINARY_API_SECRET"),
-	secure = True
-)
+CLOUDINARY = {
+    'cloud_name': os.environ.get("CLOUDINARY_CLOUD_NAME"),
+    'api_key': os.environ.get("CLOUDINARY_API_KEY"),
+    'api_secret': os.environ.get("CLOUDINARY_API_SECRET"),
+    "secure": True
+}
 
+# cloudvault config
+DEFAULT_FILE_STORAGE = "cloudvault.cloud_storage.CloudinaryStorage"
 
 # ckeditor config
 CKEDITOR_UPLOAD_PATH = "ck-uploads/"

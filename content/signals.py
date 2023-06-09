@@ -1,20 +1,10 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.urls import reverse
 from .models import Post, Subscriber
 from django.utils.html import strip_tags
-
-
-class EmailImage(EmailMultiAlternatives):
-	def __init__(self, *args, **kwargs):
-		super().__init__(*args, **kwargs)
-	
-	def add_related(self, content, mimetype=None, *args, **kwargs):
-		if self.encoding != 'utf-8':
-			content = content.encode(self.encoding).decode('utf-8')
-		super().attach_alternative(content, mimetype, *args, **kwargs)
 
 
 @receiver(post_save, sender=Post)

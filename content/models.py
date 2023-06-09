@@ -3,7 +3,6 @@ from django.db import models
 from django.contrib.auth import get_user_model
 from django.utils.text import slugify
 from django.urls import reverse
-import cloudinary.uploader
 from ckeditor.fields import RichTextField
 
 # User object
@@ -31,8 +30,7 @@ class Post(models.Model):
 	title = models.CharField(max_length=1500, unique=True)
 	slug = models.SlugField(max_length=2000, editable=False)
 	tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
-	thumbnail = models.ImageField(upload_to="thumbnail")
-	thumbnail_url = models.URLField(max_length=2048, editable=False)
+	thumbnail = models.ImageField()
 	body = RichTextField(config_name='awesome_ckeditor')
 	author = models.ForeignKey(
 		User,
@@ -59,12 +57,7 @@ class Post(models.Model):
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.title) # create post slug
 		super().save(*args, **kwargs)
-		response = cloudinary.uploader.upload(self.thumbnail.path) # upload post thumbnail to cloudinary
-		self.thumbnail_url = response["secure_url"] # create post thumbnail_url
-		print(response["secure_url"])
-		# resave
-		super().save(*args, **kwargs)
-
+		
 	def get_absolute_url(self):
 		return reverse("content:post_detail", kwargs={"post_slug": self.slug})
 	
