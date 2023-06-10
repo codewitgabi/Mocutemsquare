@@ -22,7 +22,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
+
     # custom apps
     "ckeditor",
     "ckeditor_uploader",
@@ -117,14 +117,14 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = "account.User"
 
 JAZZMIN_SETTINGS = {
-	"site_title": "Blog",
-	"site_header": "Blog",
-	"site_brand": "Blog",
-	"welcome_sign": "Welcome to Blog Admin",
-	"user_avatar": "avatar",
-	"copyright": "My blog by codewitgbabi",
-	"show_sidebar": True,
-	"navigation_expanded": True,
+    "site_title": "Blog",
+    "site_header": "Blog",
+    "site_brand": "Blog",
+    "welcome_sign": "Welcome to Blog Admin",
+    "user_avatar": "avatar",
+    "copyright": "My blog by codewitgbabi",
+    "show_sidebar": True,
+    "navigation_expanded": True,
 }
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
@@ -154,8 +154,10 @@ CKEDITOR_CONFIGS = {
     'awesome_ckeditor': {
         "toolbar_Basic": [
             {'name': 'document', 'items': ['-', 'NewPage']},
-            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', '-', 'Undo', 'Redo']},
-            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'clipboard', 'items': [
+                'Cut', 'Copy', 'Paste', 'PasteText', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': [
+                'Find', 'Replace', '-', 'SelectAll']},
             '/',
             {'name': 'basicstyles',
              'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
@@ -167,7 +169,8 @@ CKEDITOR_CONFIGS = {
             {'name': 'insert',
              'items': ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
             '/',
-            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'styles', 'items': [
+                'Styles', 'Format', 'Font', 'FontSize']},
             {'name': 'colors', 'items': ['TextColor', 'BGColor']},
             '/',
             {'name': 'yourcustomtools', 'items': [
@@ -179,4 +182,3 @@ CKEDITOR_CONFIGS = {
         "width": "100%"
     },
 }
-

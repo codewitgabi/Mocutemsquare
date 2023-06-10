@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 
 # custom imports
@@ -6,35 +6,34 @@ from .models import Subscriber
 
 
 def post_detail(request, post_slug):
-	return HttpResponse("Hello world")
+    return HttpResponse("Hello world")
 
 
 def subscribe_to_newsletter(request):
-	"""
-	Subscriber newsletter subscription handler
-	"""
-	if request.method == "POST":
-		email = request.POST.get("email")
-		
-		subscriber = Subscriber.objects.get_or_create(email=email)[0]
-		subscriber.save()
-		
-	return redirect(request.META.HTTP_REFERER)
+    """
+    Subscriber newsletter subscription handler
+    """
+    if request.method == "POST":
+        email = request.POST.get("email")
+
+        subscriber = Subscriber.objects.get_or_create(email=email)[0]
+        subscriber.save()
+
+    return redirect(request.META.HTTP_REFERER)
 
 
 def unsubscribe_to_newsletter(request):
-	"""
-	Subscriber newsletter unsubscription page view
-	"""
-	
-	if request.method == "POST":
-		email = request.POST.get("email")
-		
-		subscriber = get_object_or_404(Subscriber, email=email)
-		# delete instance
-		subscriber.delete()
-		
-		return HttpResponse("Unsubscription successful!")
-		
-	return render(request, "content/unsubscribe.html")
+    """
+    Subscriber newsletter unsubscription page view
+    """
 
+    if request.method == "POST":
+        email = request.POST.get("email")
+
+        subscriber = get_object_or_404(Subscriber, email=email)
+        # delete instance
+        subscriber.delete()
+
+        return HttpResponse("Unsubscription successful!")
+
+    return render(request, "content/unsubscribe.html")
