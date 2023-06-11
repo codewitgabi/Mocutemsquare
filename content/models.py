@@ -41,6 +41,7 @@ class Post(models.Model):
     )
     published = models.BooleanField(default=False)
     notified = models.BooleanField(default=False, editable=False)
+    views = models.ManyToManyField("Client", blank=True, editable=False)
     date_created = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -57,6 +58,18 @@ class Post(models.Model):
 
     def get_absolute_url(self):
         return reverse("content:post_detail", kwargs={"post_slug": self.slug})
+    
+    @property
+    def views_(self):
+        return self.views.count()
+    
+    @classmethod
+    def popular(cls):
+        return cls.objects.order_by("-views")[:10]
+    
+    @classmethod
+    def recent(cls):
+        return cls.objects.order_by("-date_created")[:4]
 
     def __str__(self):
         return self.title
@@ -71,3 +84,18 @@ class Subscriber(models.Model):
 
     def __str__(self):
         return self.email
+
+
+class Client(models.Model):
+    ip_address = models.GenericIPAddressField()
+    user_agent = models.CharField(max_length=500)
+
+    class Meta:
+        unique_together = ('ip_address', 'user_agent')
+        indexes = [
+            models.Index(fields=['ip_address', 'user_agent'])
+        ]
+    
+    def __str__(self):
+        return self.ip_address
+

@@ -4,6 +4,7 @@ from . import views
 
 app_name = "content"
 urlpatterns = [
+    path("", views.index, name="index"),
     path("post/<slug:post_slug>/", views.post_detail, name="post_detail"),
     path("subscribe/",
          views.subscribe_to_newsletter,

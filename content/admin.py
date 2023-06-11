@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Tag, Post, Subscriber
+from .models import Tag, Post, Subscriber, Client
 
 
 @admin.register(Tag)
@@ -9,9 +9,16 @@ class TagAdmin(admin.ModelAdmin):
 
 @admin.register(Post)
 class PostAdmin(admin.ModelAdmin):
-    list_display = ("id", "tag", "title", "author", "date_created")
+    list_display = ("id", "tag", "title", "author", "date_created", "views_")
 
 
 @admin.register(Subscriber)
 class SubscriberAdmin(admin.ModelAdmin):
     list_display = ("email",)
+
+
+@admin.register(Client)
+class ClientAdmin(admin.ModelAdmin):
+    list_display = ('ip_address', 'user_agent')
+
+
