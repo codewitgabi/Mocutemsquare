@@ -1,0 +1,171 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- displays site properly based on user's device -->
+
+  <link rel="icon" type="image/png" sizes="128x128" href="{% static 'Asset/Images/Icons/Logo.png' %}" />
+  <!-- STYLE SHEET -->
+  <link rel="stylesheet" href="{% static 'post-detail.css' %}" />
+
+  <!-- FONT STYLE  -->
+  <script src="https://kit.fontawesome.com/c190620e84.js" crossorigin="anonymous"></script>
+  <title>{{ post.title }}</title>
+</head>
+
+<body>
+    <header id="header">
+        <a href="{% url 'content:index' %}"
+          ><img
+            class="logo"
+            src="{% static 'Asset/Images/Icons/Logo.png' %}"
+            alt="logo"
+        /></a>
+  
+        <div>
+          <ul id="navbar">
+            <li><a href="{% url 'content:index' %}">Home</a></li>
+            <li><a href="#feedback">Feedback</a></li>
+            <a href="#" id="close"><i class="fa-solid fa-xmark"></i></a>
+          </ul>
+        </div>
+        <div id="mobile">
+          <i id="bar" class="fa-solid fa-outdent"></i>
+        </div>
+      </header>
+
+      <!-- HERO SECTION  -->
+      <section style="background-image: url({{ post.thumbnail.url }});"  id="hero-section">
+        <div style="text-transform: uppercase;" class="bus-blue">{{ post.tag }}</div>
+        <div class="dummy-time-stamp">
+         <img class="author-img" src="{{ post.author.avatar.url }}" alt="author-avatar" />
+          <span>{{ post.author.get_full_name }}</span>
+          <img src="{% static 'Asset/Images/Icons/clock.png' %}" alt="Clock Icon" />
+          <span> {{ post.date_created|date:"M t, Y" }}</span>
+        </div>
+        <h1>{{ post.title }}<h1>
+      </section>
+
+      <!-- BLOG POST -->
+      <section id="blog-post">
+          {{ post.body|safe }}
+        <hr>
+      </section>
+      
+    <section id="socials">
+      <div class="socials-container">
+        <p>Share</p>
+        <div class="icons">
+          <a href="#"><i class="fa-brands fa-facebook"></i></a>
+          <a href="#"><i class="fa-brands fa-twitter"></i></a>
+          <a href="#"><i class="fa-brands fa-instagram"></i></a>
+          <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+        </div>
+      </div>
+    </section>
+
+    <section id="reply-section">
+      <h4 id="feedback">Leave a Reply</h4><br />
+       <div class="comment-form">
+       <form id="comment-form" method="post">
+       {% csrf_token %}
+       
+        <div class="form-group">
+          <label for="name"></label>
+          <input type="text" class="grow" id="name" name="name" placeholder="Name" required />
+        </div>
+      
+        <div class="form-group">
+          <label for="email"></label>
+          <input type="email" class="grow" id="email" name="email" placeholder="Email" required />
+        </div>
+      
+        <div class="form-group">
+          <label for="message"></label>
+          <textarea class="grow mess" id="message" name="message" placeholder="Message" required></textarea>
+        </div> 
+        
+        <button class="post-button">SEND REPLY</button>
+        </form>
+       </div>
+      
+    </section>
+
+      <!-- YOU MAY LIKE SECTION  -->
+      <section id="more-of-us-section">
+        <h2>YOU MAY LIKE</h2>
+        <div class="blog-container">
+        
+        {% for post in random_posts %}
+          <div class="blog-container-box">
+            <img src="{{ post.thumbnail.url }}" alt="" />
+            <div class="blog-text">
+              <div style="text-transform: uppercase;" class="yml red">{{ post.tag }}</div>
+              <a href="{{ post.get_absolute_url }}">{{ post.title|truncatewords:"25" }}</a>
+              <div class="dummy-time-stamp grid-box">
+                <img class="author-img" src="{{ post.author.avatar.url }}" alt="author-avatar" />
+                <span>{{ post.author.get_full_name }}</span>
+                <img class="small" src="{% static 'Asset/Images/Icons/clock.png' %}" alt="Clock Icon" />
+                <span> {{ post.date_created|date:"M t, Y" }}</span>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+          
+        </div>
+      </section>
+
+  <!-- FOOTER SECTION  -->
+    <footer id="footer">
+      <div class="three-div-wrapper">
+        <div class="about-us width">
+          <h3>ABOUT US</h3>
+          <p>
+            Lorem ipsum dolor sit amet consectetur. Quis diam risus elit viverra
+            libero malesuada mauris id. Sapien tincidunt sit facilisis
+            vestibulum eu est. Id justo tempor non ultricies tincidunt enim ut.
+            Viverra nisi sit et volutpat.
+          </p>
+          <div class="icons">
+            <a href="https://facebook.com/mocutemsquare"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://twitter.com/mocutemsquare"><i class="fa-brands fa-twitter"></i></a>
+          </div>
+        </div>
+        <div class="recent-post width">
+          <h3>RECENT POSTS</h3>
+          
+          {% for post in recent_posts %}
+              <a href="{{ post.get_aboslute_url }}">{{ post.title|truncatechars:"48" }}</a>
+          {% endfor %}
+          
+        </div>
+        <div class="newsletter width">
+          <h3>NEWSLETTER</h3>
+          <form id="newsletter-form" method="post" action="{% url 'content:subscribe' %}">
+          {% csrf_token %}
+            <input type="email" name="email" required placeholder="Your Email Address" />
+          </form>
+          <a id="newsletter-btn">SIGN UP</a>
+        </div>
+      </div>
+      <div class="bottom-spaced-div">
+        <div class="copyright-2">
+          <p>Copyright. All rights reserved</p>
+        </div>
+        <div class="copyright">
+          <a href="">About us </a> | <a href="">Privacy policy</a>
+        </div>
+      </div>
+    </footer>
+
+    <!-- SCROLL UP BUTTON -->
+    <a href="#" id="scrollToTopButton" class="scroll-to-top-button">
+      <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- JAVASCRIPT  -->
+    <script src="{% static 'Asset/Javascript/main.js' %}"></script>
+  </body>
+</html>
