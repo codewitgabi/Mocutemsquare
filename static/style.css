@@ -258,7 +258,7 @@ body {
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
-  /*background-image: url(Asset/Images/Sub-Hero/bg.svg);*/
+  background-image: url(Asset/Images/Sub-Hero/bg.svg);
   background-size: cover;
   background-repeat: no-repeat;
   width: 375px;

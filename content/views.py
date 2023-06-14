@@ -34,7 +34,7 @@ def post_detail(request, post_slug):
     client_ip = get_client_ip(request)
     user_agent = request.META.get("HTTP_USER_AGENT", "")
     
-    # print(client_ip, user_agent)
+    print(client_ip, user_agent)
     
     # check if client already viewed the post
     client, created = Client.objects.get_or_create(
