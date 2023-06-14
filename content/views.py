@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.db.models import Q
 
 # custom imports
-from .models import Subscriber, Post, Client
+from .models import Subscriber, Post, Client, Feedback
 
 
 def get_client_ip(request):
@@ -16,7 +16,11 @@ def get_client_ip(request):
 
 
 def index(request):
-    posts = Post.objects.all()
+    query = request.GET.get("q", "")
+    posts = Post.objects.filter(
+        Q(title__icontains=query) |
+        Q(tag__name__icontains=query)
+    )
     recent_posts = Post.recent()
     
     context = {
@@ -29,6 +33,23 @@ def index(request):
 
 def post_detail(request, post_slug):
     post = get_object_or_404(Post, slug=post_slug)
+    recent_posts = Post.recent()
+    random_posts = Post.objects.exclude(slug=post_slug).order_by("?")[:6]
+    
+    # handle comment submission
+    if request.method == "POST":
+        # get form data 
+        
+        name = request.POST.get("name")
+        email = request.POST.get("email")
+        message = request.POST.get("message")
+        
+        # create comment
+        Feedback.objects.create(
+            name=name, email=email, message=message
+        )
+        
+        return redirect("content:post_detail", post_slug=post_slug)
     
     # Get the client's IP address and user agent
     client_ip = get_client_ip(request)
@@ -45,7 +66,13 @@ def post_detail(request, post_slug):
     # increment view count if client has not viewed the post
     if created: post.views.add(client)
     
-    return HttpResponse("Hello world")
+    context = {
+        "post": post,
+        "recent_posts": recent_posts,
+        "random_posts": random_posts
+    }
+    
+    return render(request, "content/post-detail.html", context)
 
 
 def subscribe_to_newsletter(request):

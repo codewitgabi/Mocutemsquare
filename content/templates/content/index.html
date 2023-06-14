@@ -18,7 +18,8 @@
     <script
       src="https://kit.fontawesome.com/c190620e84.js"
       crossorigin="anonymous"></script>
-    <title>Blog Website</title>
+    <title>Morcutemsquare's Blog</title>
+    </style>
   </head>
 
   <body>
@@ -35,17 +36,16 @@
         <div>
           <ul id="navbar">
             <li><a href="{% url 'content:index' %}">Home</a></li>
-            <li><a href="#">Features</a></li>
-            <li><a href="#">Business</a></li>
-            <li><a href="#">Gaming</a></li>
-            <li><a href="#">Health</a></li>
+            <li><a  href="#popular">Popular</a></li>
+            <li><a href="#morefromus">More From Us</a></li>
             <li class="right-end">
               <div class="search-container">
                 <form>
                   <input
                     type="search"
+                    name="q"
                     class="search-input"
-                    placeholder="Search..." />
+                    placeholder="Search..." required />
                   <button class="search-button" type="submit">
                     <img
                       src="{% static 'Asset/Images/Icons/search.png' %}"
@@ -95,7 +95,7 @@
 
     <!-- MORE OF US SECTION  -->
     <section id="more-of-us-section">
-      <h2>POPULAR</h2>
+      <h2 id="popular">POPULAR</h2>
       
       <div class="blog-container">
       
@@ -136,7 +136,7 @@
 
     <!-- MORE OF US CONT'D -->
     <section id="mfs">
-      <h2>MORE FROM US</h2>
+      <h2 id="morefromus">MORE FROM US</h2>
 
       <div class="mfs-container">
       
@@ -169,10 +169,8 @@
             Viverra nisi sit et volutpat.
           </p>
           <div class="icons">
-            <i class="fa-brands fa-facebook"></i>
-            <i class="fa-brands fa-twitter"></i>
-            <i class="fa-brands fa-instagram"></i>
-            <i class="fa-brands fa-linkedin"></i>
+            <a href="https://facebook.com/mocutemsquare"><i class="fa-brands fa-facebook"></i></a>
+            <a href="https://twitter.com/mocutemsquare"><i class="fa-brands fa-twitter"></i></a>
           </div>
         </div>
         <div class="recent-post width">
@@ -208,6 +206,6 @@
     </a>
 
     <!-- JAVASCRIPT  -->
-    <script src="{% static 'Asset/Javascript/script.js' %}"></script>
+    <script src="{% static 'Asset/Javascript/main.js' %}"></script>
   </body>
 </html>
