@@ -28,7 +28,7 @@
         <a href="{% url 'content:index' %}"
           ><img
             class="logo"
-            src="{% static 'Asset/Images/Hero-Section/Logo.png' %}"
+            src="{% static 'Asset/Images/Icons/Logo.png' %}"
             alt="logo"
         /></a>
 
@@ -79,8 +79,7 @@
     <section id="overlap-hero-section">
       
       {% for post in recent_posts %}
-      <div class="gaming container super">
-        <!-- <img src="{{ post.thumbnail.url }}" alt="Gaming" /> -->
+      <div style="background-image: url({{ post.thumbnail.url }});" class="gaming container super">
         <span class="tag">{{ post.tag }}</span>
         <a href="{{ post.get_absolute_url }}">{{ post.title|truncatechars:"45" }}</a>
         <div class="dummy-time-stamp box">
@@ -99,15 +98,13 @@
       <h2>POPULAR</h2>
       
       <div class="blog-container">
+      
       {% for post in Post.popular %}
         <div class="blog-container-box">
           <img
             src="{{ post.thumbnail.url }}"
             alt="post-thumbnail" />
           <div class="blog-text">
-            <!-- <img
-              src="{% static 'Asset/Images/More-From-Us-Section/Business-MRFS.png' %}"
-              alt="" /> -->
               <span class="pop-tag">{{ post.tag }}</span>
             <a href="{{ post.get_absolute_url }}">{{ post.title|truncatechars:"25" }}</a>
             <div class="dummy-time-stamp grid-box">
@@ -123,6 +120,7 @@
                 alt="Clock Icon" />
               <span> {{ post.date_created|date:"M t, Y" }}</span>
             </div>
+          </div>
           </div>
           {% endfor %}
           

@@ -65,7 +65,7 @@ class Post(models.Model):
     
     @classmethod
     def popular(cls):
-        return cls.objects.order_by("-views")[:10]
+        return cls.objects.all().order_by("id", "-views").distinct("id")[:10]
     
     @classmethod
     def recent(cls):
