@@ -8,7 +8,7 @@ SECRET_KEY = os.environ.get("SECRET_KEY")
 
 DEBUG = os.environ.get("DEBUG") != "False"
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "morcutemsquare.up.railway.app"]
+ALLOWED_HOSTS = ["localhost", "127.0.0.1", "mocutemsquare.up.railway.app"]
 
 
 # Application definition
@@ -195,6 +195,6 @@ CSRF_COOKIE_SECURE = True
 SESSION_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = [
 	"http://localhost",
-	"https://morcutemsquare.up.railway.app",
+	"https://mocutemsquare.up.railway.app",
 ]
 
